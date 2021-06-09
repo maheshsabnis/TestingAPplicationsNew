@@ -114,4 +114,35 @@ namespace CS_TestingApp
             set;
         }
     }
+
+    public class Calculator
+    {
+        public int Add(int x, int y)
+        {
+            int res = x + y;
+            return res;
+        }
+    }
+
+    public class TemperatureSensor
+    {
+        bool _isInitialized;
+
+        public void Initialize()
+        {
+            // Initialize hardware interface
+            _isInitialized = true;
+        }
+
+        public int ReadCurrentTemperature()
+        {
+            if (!_isInitialized)
+            {
+                throw new InvalidOperationException("Cannot read temperature before initializing.");
+            }
+
+            // Read hardware temp
+            return 42; // Simulate for demo code purposes
+        }
+    }
 }

@@ -44,5 +44,73 @@ namespace CS_TestProject
                 Assert.AreEqual(x.Name, "Bharat");
             }
         }
+
+        [Test]
+        public void AddMethodTest()
+        {
+            Calculator add = new Calculator();
+            int result = add.Add(15, 65);
+            Assert.That(result, Is.EqualTo(80));
+        }
+
+        [Test]
+        [TestCase(15, 35, 50)]
+        [TestCase(10, 45, 55)]
+        [TestCase(20, 50, 70)]
+        public void AddMethodTest(int num1, int num2, int expected)
+        {
+            Calculator add = new Calculator();
+            int result = add.Add(num1, num2);
+            Assert.AreEqual(expected, result);
+        }
+
+        // Repeat test for 10 times
+        [Test]
+         
+        [Repeat(10)]
+        public void AddMethodTest1()
+        {
+            Calculator add = new Calculator();
+            int result = add.Add(16, 24);
+            Assert.AreEqual(result, 40);
+        }
+
+        // The first test can be to test the happy path:
+
+        [Test]
+        public void ReadTemperature()
+        {
+            var sut = new TemperatureSensor();
+
+            sut.Initialize();
+
+            var temperature = sut.ReadCurrentTemperature();
+
+            Assert.AreEqual(42, temperature);
+        }
+
+        // Next, a test can be written to check that the expected exception is thrown:
+
+        [Test]
+        public void ErrorIfReadingBeforeInitialized()
+        {
+            var sut = new TemperatureSensor();
+
+            Assert.Throws<InvalidOperationException>(() => sut.ReadCurrentTemperature());
+        }
+
+        // Notice in the preceding code that any InvalidOperationException thrown will pass the test. To ensure that the thrown exception is correct, it can be captured and further asserts performed against it:
+
+        [Test]
+        public void ErrorIfReadingBeforeInitialized_CaptureExDemo()
+        {
+            var sut = new TemperatureSensor();
+
+            var ex = Assert.Throws<InvalidOperationException>(() => sut.ReadCurrentTemperature());
+
+            Assert.AreEqual("Cannot read temperature before initializing.", ex.Message);
+            // or:
+            Assert.That(ex.Message, Is.EqualTo("Cannot read temperature before initializing."));
+        }
     }
 }
